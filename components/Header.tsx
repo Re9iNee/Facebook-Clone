@@ -7,7 +7,14 @@ import {
     PlayIcon,
     ShoppingCartIcon,
 } from "@heroicons/react/24/outline";
-import { HomeIcon, UserGroupIcon } from "@heroicons/react/24/solid";
+import {
+    HomeIcon,
+    UserGroupIcon,
+    Squares2X2Icon,
+    ChatBubbleOvalLeftEllipsisIcon,
+    BellIcon,
+    ChevronDownIcon,
+} from "@heroicons/react/24/solid";
 
 import HeaderIcon from "./HeaderIcon";
 
@@ -29,7 +36,7 @@ const Header = (): ReactElement => {
                     <input
                         type='text'
                         placeholder='Search Facebook'
-                        className='flex ml-2 flex-shrink items-center bg-transparent outline-none placeholder-gray-500'
+                        className='hidden md:inline-flex ml-2 items-center bg-transparent outline-none placeholder-gray-500'
                     />
                 </div>
             </div>
@@ -46,6 +53,17 @@ const Header = (): ReactElement => {
             </div>
 
             {/* Right */}
+            <div className='flex items-center sm:space-x-2 justify-end'>
+                {/* Profile pic */}
+
+                <p className='font-semibold whitespace-nowrap pr-3'>
+                    {"Re9iNee"}
+                </p>
+                <Squares2X2Icon className='icon' />
+                <ChatBubbleOvalLeftEllipsisIcon className='icon' />
+                <BellIcon className='icon' />
+                <ChevronDownIcon className='icon' />
+            </div>
         </div>
     );
 };
