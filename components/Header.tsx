@@ -1,11 +1,19 @@
 import Image from "next/image";
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import {
+    FlagIcon,
+    MagnifyingGlassIcon,
+    PlayIcon,
+    ShoppingCartIcon,
+} from "@heroicons/react/24/outline";
+import { HomeIcon, UserGroupIcon } from "@heroicons/react/24/solid";
+
+import HeaderIcon from "./HeaderIcon";
 
 const Header = (): ReactElement => {
     return (
-        <div>
+        <div className='sticky top-0 z-50 bg-white flex items-center p-2 lg:px-5 shadow-md'>
             {/* Left */}
             <div className='flex items-center'>
                 <Image
@@ -21,12 +29,21 @@ const Header = (): ReactElement => {
                     <input
                         type='text'
                         placeholder='Search Facebook'
-                        className='flex ml-2 items-center bg-transparent outline-none placeholder-gray-500'
+                        className='flex ml-2 flex-shrink items-center bg-transparent outline-none placeholder-gray-500'
                     />
                 </div>
             </div>
 
             {/* Center */}
+            <div className='flex justify-center flex-grow'>
+                <div className='flex space-x-6 md:space-x-2'>
+                    <HeaderIcon active Icon={HomeIcon} />
+                    <HeaderIcon Icon={FlagIcon} />
+                    <HeaderIcon Icon={PlayIcon} />
+                    <HeaderIcon Icon={ShoppingCartIcon} />
+                    <HeaderIcon Icon={UserGroupIcon} />
+                </div>
+            </div>
 
             {/* Right */}
         </div>
