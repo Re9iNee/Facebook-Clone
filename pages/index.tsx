@@ -1,5 +1,7 @@
+import Feed from "@components/Feed";
 import Header from "@components/Header";
 import Login from "@components/Login";
+import Sidebar from "@components/Sidebar";
 import { GetServerSidePropsContext } from "next";
 import { Session } from "next-auth";
 import { getSession } from "next-auth/react";
@@ -13,19 +15,20 @@ const Home = ({ session }: Props): ReactElement => {
     if (!session) return <Login />;
 
     return (
-        <>
+        <div className='h-screen bg-gray-100 overflow-hidden'>
             <Head>
                 <title>Facebook</title>
             </Head>
 
             <Header />
 
-            <main>
-                {/* Sidebar */}
-                {/* Feed */}
+            <main className='flex'>
+                <Sidebar />
+                <Feed />
+
                 {/* Widgets */}
             </main>
-        </>
+        </div>
     );
 };
 

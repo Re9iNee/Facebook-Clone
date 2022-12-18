@@ -1,12 +1,8 @@
 import { ComponentProps, ReactElement } from "react";
+import { HeroIcon } from "typings";
 
 type Props = {
-    Icon: (
-        props: ComponentProps<"svg"> & {
-            title?: string;
-            titleId?: string;
-        }
-    ) => JSX.Element;
+    Icon: HeroIcon;
     active?: boolean;
 };
 function HeaderIcon({ Icon, active }: Props): ReactElement {
