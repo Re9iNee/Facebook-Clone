@@ -14,13 +14,13 @@ const StoryCard = ({ src, name, profile }: Props): ReactElement => {
                 height={40}
                 src={profile}
                 alt='story owner profile picture'
-                className='w-16 h-16 absolute opacity-0 lg:opacity-100 rounded-full z-50 top-2 border-blue-500 border-4 ml-2'
+                className='w-16 h-16 absolute opacity-0 lg:opacity-100 rounded-full z-50 top-2 border-blue-500 border-4 ml-2 object-cover'
             />
             <Image
                 fill
                 src={src}
                 alt='story content image'
-                className='object-cover filter brightness-75 rounded-xl lg:rounded-3xl'
+                className='object-cover filter brightness-75 rounded-full lg:rounded-3xl'
             />
 
             <h4 className='hidden lg:inline absolute z-50 bottom-2 text-center text-white justify-self-center'>
