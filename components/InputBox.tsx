@@ -13,6 +13,7 @@ import {
 import {
     addDoc,
     collection,
+    doc,
     serverTimestamp,
     updateDoc,
 } from "firebase/firestore";
@@ -44,8 +45,8 @@ const InputBox = (): ReactElement => {
             message: inputValue,
             name: data?.user?.name,
             email: data?.user?.email,
-            image: data?.user?.image,
             timestamp: serverTimestamp(),
+            authorImage: data?.user?.image,
         });
 
         uploadImage(doc.id);
@@ -62,6 +63,10 @@ const InputBox = (): ReactElement => {
         await uploadString(path, String(image), "data_url");
 
         const url = await getDownloadURL(path);
+        const currentPostRef = doc(db, "posts", id);
+        await updateDoc(currentPostRef, {
+            mainImage: url,
+        });
 
         removeImage();
     };
