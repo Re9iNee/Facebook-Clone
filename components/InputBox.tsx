@@ -48,8 +48,22 @@ const InputBox = (): ReactElement => {
             timestamp: serverTimestamp(),
         });
 
+        uploadImage(doc.id);
+
         inputRef.current.value = "";
         console.log("Post inserted into database with the id of ", doc.id, doc);
+    };
+
+    const uploadImage = async (id: string) => {
+        if (!image) return;
+
+        const storage = getStorage();
+        const path = ref(storage, `posts/${id}`);
+        await uploadString(path, String(image), "data_url");
+
+        const url = await getDownloadURL(path);
+
+        removeImage();
     };
 
     const addImageToPost: ChangeEventHandler<HTMLInputElement> = (event) => {
