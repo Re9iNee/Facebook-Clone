@@ -24,12 +24,15 @@ import {
     getDownloadURL,
 } from "firebase/storage";
 import { db } from "../firebase";
+import Loading from "./Loading";
 
 const InputBox = (): ReactElement => {
     const { data } = useSession();
 
     const inputRef = useRef<HTMLInputElement>(null);
     const filePickerRef = useRef<HTMLInputElement>(null);
+
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const [image, setImage] = useState<
         ArrayBuffer | string | null | undefined
@@ -91,74 +94,78 @@ const InputBox = (): ReactElement => {
     };
 
     return (
-        <div className='bg-white p-2 rounded-2xl shadow-md text-gray-500 font-medium mt-6'>
-            <div className='flex space-x-4 p-4 items-center'>
-                <Image
-                    width={40}
-                    height={40}
-                    alt={"user profile"}
-                    className='rounded-full'
-                    src={data?.user?.image ?? ""}
-                />
-                <form className='flex flex-1' onSubmit={(e) => sendPost(e)}>
-                    <input
-                        type='text'
-                        ref={inputRef}
-                        placeholder={`What's going on your mind, ${data?.user?.name}`}
-                        className='rounded-full h-12 bg-gray-100 flex-grow px-5 focus:outline-none'
+        <div className='bg-white p-2 rounded-2xl shadow-md text-gray-500 font-medium mt-6 flex justify-center items-center'>
+            <div className={isLoading ? "opacity-30 flex-grow" : ""}>
+                <div className='flex space-x-4 p-4 items-center'>
+                    <Image
+                        width={40}
+                        height={40}
+                        alt={"user profile"}
+                        className='rounded-full'
+                        src={data?.user?.image ?? ""}
                     />
-                </form>
+                    <form className='flex flex-1' onSubmit={(e) => sendPost(e)}>
+                        <input
+                            type='text'
+                            ref={inputRef}
+                            placeholder={`What's going on your mind, ${data?.user?.name}`}
+                            className='rounded-full h-12 bg-gray-100 flex-grow px-5 focus:outline-none'
+                        />
+                    </form>
 
-                {image && (
-                    <div
-                        onClick={() => removeImage()}
-                        className='flex flex-col filter hover:brightness-110 transition-duration-150 transform hover:scale-105 cursor-pointer'
-                    >
-                        <picture>
-                            <img
-                                src={String(image)}
-                                alt='Image to be upload'
-                                className='h-10 object-contain'
-                            />
-                        </picture>
-                        <p className='text-xs text-red-500 text-center'>
-                            Remove
+                    {image && (
+                        <div
+                            onClick={() => removeImage()}
+                            className='flex flex-col filter hover:brightness-110 transition-duration-150 transform hover:scale-105 cursor-pointer'
+                        >
+                            <picture>
+                                <img
+                                    src={String(image)}
+                                    alt='Image to be upload'
+                                    className='h-10 object-contain'
+                                />
+                            </picture>
+                            <p className='text-xs text-red-500 text-center'>
+                                Remove
+                            </p>
+                        </div>
+                    )}
+                </div>
+
+                <div className='flex justify-evenly p-3 border-t'>
+                    <div className='inputIcon'>
+                        <VideoCameraIcon className='h-7 text-red-500' />
+                        <p className='text-xs sm:text-sm xl:text-base'>
+                            Live Video
                         </p>
                     </div>
-                )}
-            </div>
 
-            <div className='flex justify-evenly p-3 border-t'>
-                <div className='inputIcon'>
-                    <VideoCameraIcon className='h-7 text-red-500' />
-                    <p className='text-xs sm:text-sm xl:text-base'>
-                        Live Video
-                    </p>
-                </div>
+                    <div
+                        className='inputIcon'
+                        onClick={() => filePickerRef.current?.click()}
+                    >
+                        <CameraIcon className='h-7 text-green-400' />
+                        <p className='text-xs sm:text-sm xl:text-base'>
+                            Photo/Video
+                        </p>
+                        <input
+                            hidden
+                            type='file'
+                            ref={filePickerRef}
+                            onChange={(ev) => addImageToPost(ev)}
+                        />
+                    </div>
 
-                <div
-                    className='inputIcon'
-                    onClick={() => filePickerRef.current?.click()}
-                >
-                    <CameraIcon className='h-7 text-green-400' />
-                    <p className='text-xs sm:text-sm xl:text-base'>
-                        Photo/Video
-                    </p>
-                    <input
-                        hidden
-                        type='file'
-                        ref={filePickerRef}
-                        onChange={(ev) => addImageToPost(ev)}
-                    />
-                </div>
-
-                <div className='inputIcon'>
-                    <FaceSmileIcon className='h-7 text-yellow-300' />
-                    <p className='text-xs sm:text-sm xl:text-base'>
-                        Feeling/Activity
-                    </p>
+                    <div className='inputIcon'>
+                        <FaceSmileIcon className='h-7 text-yellow-300' />
+                        <p className='text-xs sm:text-sm xl:text-base'>
+                            Feeling/Activity
+                        </p>
+                    </div>
                 </div>
             </div>
+
+            {isLoading && <Loading />}
         </div>
     );
 };
