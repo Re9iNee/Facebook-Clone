@@ -32,13 +32,15 @@ const InputBox = (): ReactElement => {
     const inputRef = useRef<HTMLInputElement>(null);
     const filePickerRef = useRef<HTMLInputElement>(null);
 
-    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const [image, setImage] = useState<
         ArrayBuffer | string | null | undefined
     >();
 
     const sendPost = async (event: FormEvent<HTMLFormElement>) => {
+        setIsLoading(true);
+
         event.preventDefault();
         const inputValue = inputRef.current?.value;
         if (!inputValue) return;
@@ -52,7 +54,9 @@ const InputBox = (): ReactElement => {
             authorImage: data?.user?.image,
         });
 
-        uploadImage(doc.id);
+        uploadImage(doc.id).finally(() => {
+            setIsLoading(false);
+        });
 
         inputRef.current.value = "";
         console.log("Post inserted into database with the id of ", doc.id, doc);
@@ -95,7 +99,7 @@ const InputBox = (): ReactElement => {
 
     return (
         <div className='bg-white p-2 rounded-2xl shadow-md text-gray-500 font-medium mt-6 flex justify-center items-center'>
-            <div className={isLoading ? "opacity-30 flex-grow" : ""}>
+            <div className={`flex-grow ${isLoading && "opacity-30"}`}>
                 <div className='flex space-x-4 p-4 items-center'>
                     <Image
                         width={40}
