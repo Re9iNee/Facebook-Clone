@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
 import InputBox from "./InputBox";
+import Posts from "./Posts";
 import Stories from "./Stories";
 
 const Feed = (): ReactElement => {
@@ -8,7 +9,7 @@ const Feed = (): ReactElement => {
             <div className='mx-auto max-w-md md:max-w-lg lg:max-w-2xl'>
                 <Stories />
                 <InputBox />
-                {/* Posts */}
+                <Posts />
             </div>
         </div>
     );

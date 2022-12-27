@@ -18,12 +18,13 @@ import {
     updateDoc,
 } from "firebase/firestore";
 import {
+    getDownloadURL,
     getStorage,
     ref,
     uploadString,
-    getDownloadURL,
 } from "firebase/storage";
-import { db } from "../firebase";
+
+import { db } from "@firebaseConfig";
 import Loading from "./Loading";
 
 const InputBox = (): ReactElement => {

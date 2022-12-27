@@ -16,7 +16,8 @@
         "paths": {
             "@pages/*": ["pages/*"],
             "@styles/*": ["styles/*"],
-            "@components/*": ["components/*"]
+            "@components/*": ["components/*"],
+            "@firebaseConfig": ["firebase.js"]
         },
         "jsx": "preserve",
         "incremental": true
