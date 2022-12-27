@@ -2,6 +2,7 @@ import Feed from "@components/Feed";
 import Header from "@components/Header";
 import Login from "@components/Login";
 import Sidebar from "@components/Sidebar";
+import Widgets from "@components/Widgets";
 import { GetServerSidePropsContext } from "next";
 import { Session } from "next-auth";
 import { getSession } from "next-auth/react";
@@ -25,8 +26,7 @@ const Home = ({ session }: Props): ReactElement => {
             <main className='flex'>
                 <Sidebar />
                 <Feed />
-
-                {/* Widgets */}
+                <Widgets />
             </main>
         </div>
     );
