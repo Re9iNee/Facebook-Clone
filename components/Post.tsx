@@ -30,7 +30,9 @@ const Post = ({
                         <p>{name}</p>
 
                         <p className='text-xs text-gray-400'>
-                            {new Date(timestamp?.toDate()).toLocaleString()}
+                            {timestamp
+                                ? new Date(timestamp?.toDate()).toLocaleString()
+                                : "-"}
                         </p>
                     </div>
                 </div>

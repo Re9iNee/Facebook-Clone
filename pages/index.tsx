@@ -3,16 +3,29 @@ import Header from "@components/Header";
 import Login from "@components/Login";
 import Sidebar from "@components/Sidebar";
 import Widgets from "@components/Widgets";
+import { db } from "@firebaseConfig";
+import {
+    collection,
+    doc,
+    getDoc,
+    getDocs,
+    orderBy,
+    query,
+    where,
+} from "firebase/firestore";
+
 import { GetServerSidePropsContext } from "next";
 import { Session } from "next-auth";
 import { getSession } from "next-auth/react";
 import Head from "next/head";
 import { ReactElement } from "react";
+import { Post } from "typings";
 
 type Props = {
+    posts: Post[];
     session: Session;
 };
-const Home = ({ session }: Props): ReactElement => {
+const Home = ({ session, posts }: Props): ReactElement => {
     if (!session) return <Login />;
 
     return (
@@ -25,7 +38,7 @@ const Home = ({ session }: Props): ReactElement => {
 
             <main className='flex'>
                 <Sidebar />
-                <Feed />
+                <Feed posts={posts} />
                 <Widgets />
             </main>
         </div>
@@ -38,9 +51,19 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     // Get the user
     const session = await getSession(context);
 
+    const q = query(collection(db, "posts"), orderBy("timestamp", "desc"));
+    const querySnapshot = await getDocs(q);
+
+    const docs = querySnapshot.docs.map((post) => ({
+        id: post.id,
+        ...post.data(),
+        timestamp: null,
+    }));
+
     return {
         props: {
             session,
+            posts: docs,
         },
     };
 }
