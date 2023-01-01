@@ -1,5 +1,5 @@
 import { db } from "@firebaseConfig";
-import { collection, Query, query } from "firebase/firestore";
+import { collection, orderBy, query } from "firebase/firestore";
 import { ReactElement } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { Post as PostModel } from "typings";
@@ -9,9 +9,11 @@ type Props = {
     posts: PostModel[];
 };
 const Posts = ({ posts }: Props): ReactElement => {
-    const [realTimePosts, loading, error] = useCollectionData<PostModel>(
-        collection(db, "posts")
+    const q = query<PostModel>(
+        collection(db, "posts"),
+        orderBy("timestamp", "desc")
     );
+    const [realTimePosts, loading, error] = useCollectionData<PostModel>(q);
 
     return (
         <div>

@@ -60,7 +60,6 @@ const InputBox = (): ReactElement => {
         });
 
         inputRef.current.value = "";
-        console.log("Post inserted into database with the id of ", doc.id, doc);
     };
 
     const uploadImage = async (id: string) => {

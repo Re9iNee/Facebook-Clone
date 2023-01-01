@@ -13,18 +13,18 @@ const Post = ({
     timestamp,
     name,
     message,
-    postImage,
+    mainImage,
 }: Post): ReactElement => {
     return (
         <div className='flex flex-col'>
             <div className='p-5 bg-white mt-5 rounded-t-2xl shadow-xl'>
                 <div className='flex items-center space-x-2'>
                     <Image
-                        className='rounded-full'
-                        src={authorImage}
                         width={40}
                         height={40}
-                        alt='Author '
+                        src={authorImage}
+                        alt='Author Image'
+                        className='rounded-full'
                     />
                     <div>
                         <p>{name}</p>
@@ -32,7 +32,7 @@ const Post = ({
                         <p className='text-xs text-gray-400'>
                             {timestamp
                                 ? new Date(timestamp?.toDate()).toLocaleString()
-                                : "-"}
+                                : "Loading"}
                         </p>
                     </div>
                 </div>
@@ -40,9 +40,9 @@ const Post = ({
                 <p className='pt-4'>{message}</p>
             </div>
 
-            {postImage && (
+            {mainImage && (
                 <div className='relative h-56 md:h-96 bg-white'>
-                    <Image src={postImage ?? ""} fill alt='Post Image' />
+                    <Image src={mainImage ?? ""} fill alt='Post Image' />
                 </div>
             )}
 

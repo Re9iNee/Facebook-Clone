@@ -12,7 +12,7 @@ export interface Post {
     name: string;
     email: string;
     message: string;
-    postImage?: string;
+    mainImage?: string;
     authorImage: string;
     timestamp: Timestamp;
 }
