@@ -1,5 +1,5 @@
 import { db } from "@firebaseConfig";
-import { collection, orderBy, query } from "firebase/firestore";
+import { collection, query } from "firebase/firestore";
 import { ReactElement } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { Post as PostModel } from "typings";
@@ -9,16 +9,17 @@ type Props = {
     posts: PostModel[];
 };
 const Posts = ({ posts }: Props): ReactElement => {
-    const q = query<PostModel>(
-        collection(db, "posts"),
-        orderBy("timestamp", "desc")
+    const [realTimePosts, loading, error] = useCollectionData(
+        query(collection(db, "posts"))
     );
-    const [realTimePosts, loading, error] = useCollectionData<PostModel>(q);
 
     return (
         <div>
             {realTimePosts
-                ? realTimePosts.map((post) => <Post key={post.id} {...post} />)
+                ? realTimePosts.map((post) => (
+                      // React useCollectionData doesn't support typings thats why i used as
+                      <Post key={post.id} {...(post as PostModel)} />
+                  ))
                 : posts.map((post) => <Post key={post.id} {...post} />)}
         </div>
     );
